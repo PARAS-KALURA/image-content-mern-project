@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
+import axios from "axios"
 
 const Feed = () => {
+
 
     const [posts, setPosts] = useState([
         {
@@ -9,6 +11,17 @@ const Feed = () => {
             caption: "Me",
         }
     ])
+
+  useEffect(() => {
+    axios.get("http://localhost:3000/posts")
+    .then((res) => {
+        console.log("BACKEND RESPONSE:", res.data)
+        setPosts(res.data.posts)
+    })
+    .catch((err) => {
+        console.error(err)
+    })
+}, [])
 
     return (
         <section className="max-w-2xl mx-auto mt-10 space-y-8">

@@ -1,9 +1,39 @@
 import React from 'react'
+import axios from "axios"
+import { useNavigate } from 'react-router-dom'
+
+
 
 const CreatePost = () => {
+
+    const navigate = useNavigate();
+
+  
+  const handleSubmit = async (e) => {
+  e.preventDefault()
+
+  const formData = new FormData(e.target)
+
+  axios.post("http://localhost:3000/create-post", formData)
+    .then((res) => {
+      alert("Post Created Successfully")
+      e.target.reset()
+
+      console.log(res);
+      navigate("/feed")
+      
+    })
+    .catch((err) => {
+      console.error(err)
+    })
+}
+
+
   return (
     <section>
-        <form className="max-w-md mx-auto mt-10 bg-white shadow-lg rounded-2xl p-6 space-y-5 border">
+        <form
+        onSubmit={handleSubmit}
+        className="max-w-md mx-auto mt-10 bg-white shadow-lg rounded-2xl p-6 space-y-5 border">
   
   <h2 className="text-2xl font-semibold text-gray-800 text-center">
     Create Post
